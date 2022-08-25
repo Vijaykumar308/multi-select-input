@@ -101,6 +101,7 @@ class MultiInput extends HTMLElement {
   _deleteItem(item) {
     const value = item.textContent;
     item.remove();
+    interviewerRemove(value);
     // If duplicates aren't allowed, value is removed (in _addItem())
     // as a datalist option and from the _allowedValues array.
     // So — need to add it back here.
@@ -158,11 +159,29 @@ window.customElements.define('multi-input', MultiInput);
 let L1 = [];
 let L2 = [];
 let L3 = [];
-let finalArr = [];
 let tempArr = [];
+let finalArr = [];
 
 function filterMyData(arr) {
   return arr.filter((v,i,a)=>a.findIndex(v2=>(v2.index===v.index))===i)
+}
+
+function interviewerRemove(val){
+  let interviewer = multiInput.getValues();
+  console.log("inter remove interviewer:",interviewer);
+  console.log('tempArr interviewerRemove: ',tempArr);
+  
+  let filterData = tempArr.filter((arr,i)=>{
+      return interviewer[i] == arr.name;
+  });
+
+  // for(let i in filterData){
+  //     if(filterData.name !== interviewer){
+  //       filterData.index = i;
+  //     }
+  // }
+//  tempArr = filterData;
+  console.log("after removing: ",filterData);
 }
 function fun(level){
   if (multiInput.getValues().length > 0) {
@@ -176,20 +195,21 @@ function fun(level){
       data.name = interviewer[i]
       tempArr.push(data);
     }
-    console.log(tempArr);
-    let d = filterMyData(tempArr);
-    for(let i = 0; i < d.length; i++){
-      switch(d[i].level){
+    // console.log(tempArr);
+    tempArr = filterMyData(tempArr);
+    console.log("tempArr..",tempArr);
+    for(let i = 0; i < tempArr.length; i++){
+      switch(tempArr[i].level){
         case "L1":
-            L1.push(d[i]);
+            L1.push(tempArr[i]);
             // console.log("L1",L1);
             break;
         case "L2":
-            L2.push(d[i]);
+            L2.push(tempArr[i]);
             // console.log("L2",L2);
             break;
         case "L3":
-            L3.push(d[i]);
+            L3.push(tempArr[i]);
             // console.log("L3",L3);
             break;
       }
@@ -197,6 +217,9 @@ function fun(level){
     L1 = filterMyData(L1);
     L2 = filterMyData(L2);
     L3 = filterMyData(L3);
+
+  //displaying the data as final result
+    displayDataWithLevels(tempArr);
   } 
   else {
     values.textContent = 'Got noone  :`^(.'; 
@@ -204,18 +227,21 @@ function fun(level){
 }
 
 
+function displayDataWithLevels(arr){
+    removeAllChildNodes(values);
+    for(let i in arr){
+      let p = document.createElement('p');
+      let concatName = `${arr[i].name}-${arr[i].level}`
+      p.innerText = concatName;
+      values.append(p);
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
 
 
 
