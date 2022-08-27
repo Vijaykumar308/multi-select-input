@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>multi-input</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css"> 
+</head>  
+<body>
+    
+   <div>
+    <label for="Levels">Select Level</label>
+     <select id="Levels" onchange="fun(this.value)">
+        <option value="--select--">--Select--</option>
+        <option value="L1">L1</option>
+        <option value="L2">L2</option>
+        <option value="L3">L3</option>
+     </select>
+   </div> 
+  <div>
+    <label>Interviewer:</label>
+    <multi-input id="inputTag">
+      <input list="speakers">
+      <datalist id="speakers">
+        <option value="Vijay">Vijay</option>
+        <option value="Lovejot">Lovejot</option>
+        <option value="Manish">Manish</option>
+        <option value="Anmol">Anmol</option>
+        <option value="Aniket">Aniket</option>
+        <option value="Vishal">Vishal</option>
+      </datalist>
+    </multi-input>
+    <button id="get">Get</button>
+  </div>
+
+  <p id="values"></p>
+
+</body>
+
+  <script src="multi-input.js"></script>
+  <script src="script.js"></script>
+
+
+</html>
